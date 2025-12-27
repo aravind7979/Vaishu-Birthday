@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Separation Surprise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* Body and Background */
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(ellipse at bottom, #000 0%, #050505 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Georgia", "Times New Roman", serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Star-like particles for Midnight Solitude effect */
+        body::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            box-shadow: 
+                50px 100px 2px #fff,
+                200px 300px 2px #fff,
+                400px 150px 2px #fff,
+                600px 250px 2px #fff,
+                800px 50px 2px #fff,
+                1200px 400px 2px #fff;
+            animation: twinkle 5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+
+        /* Heart */
+        #heart {
+            font-size: 3.5rem; /* smaller */
+            color: #e74c3c;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+            z-index: 1;
+        }
+
+        #heart:hover {
+            transform: scale(1.5);
+            color: #ff4d4d;
+        }
+
+        /* Text */
+        #text {
+            color: #fff;
+            font-size: 2rem;
+            text-align: center;
+            opacity: 0;
+            margin-top: 30px;
+            transition: opacity 1.5s;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+#instruction {
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 10px;
+    opacity: 1;
+    transition: opacity 0.5s;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="heart">❤️</div>
+   <div id="instruction">Click on❤️</div>
+    <div id="text"></div>
+</div>
+
+<audio id="bgAudio">
+    <source src="separationSong.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const heart = document.getElementById("heart");
+    const text = document.getElementById("text");
+    const audio = document.getElementById("bgAudio");
+
+    heart.addEventListener("click", () => {
+        // Play audio
+        audio.play();
+
+        // Remove heart
+        heart.style.display = "none";
+// Hide instruction
+document.getElementById("instruction").style.opacity = 0;
+
+
+        // Show first text
+        text.textContent = "It is just a separation, we will get back again";
+        text.style.opacity = 1;
+
+        // After 5 seconds, swap text
+        setTimeout(() => {
+            text.style.opacity = 0; // fade out first text
+            setTimeout(() => {
+                text.textContent = "It's been 3 years"; // fade in second text
+                text.style.opacity = 1;
+            }, 1500);
+        }, 5000);
+
+        // Redirect to another page after audio ends
+        audio.addEventListener("ended", () => {
+            window.location.href = "surprise.html";
+        });
+    });
+</script>
+
+</body>
+</html>

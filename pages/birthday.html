@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Vaishnavi 🫶</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Comic Sans MS", cursive;
+        color: #ff9edb;
+        overflow: hidden;
+    }
+
+    /* ❤️ Floating Hearts */
+    .heart {
+        position: absolute;
+        color: #ff5fc8;
+        font-size: 18px;
+        animation: floatUp 8s linear infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(100vh) scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(-10vh) scale(1.3);
+            opacity: 1;
+        }
+    }
+
+    /* ✨ Sparkle */
+    .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        animation: sparkle 2s infinite ease-in-out;
+    }
+
+    @keyframes sparkle {
+        0% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 1; transform: scale(1.2); }
+        100% { opacity: 0; transform: scale(0.5); }
+    }
+
+    .container {
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        z-index: 10;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        text-shadow: 0 0 25px #ff5fc8;
+        min-height: 70px;
+    }
+
+    .cursor {
+        display: inline-block;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0%,50% { opacity: 1; }
+        51%,100% { opacity: 0; }
+    }
+
+    .fade-out {
+        animation: fadeOut 1.2s forwards;
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+    }
+
+    /* PASSWORD SECTION */
+    .password-box {
+        display: none;
+        animation: fadeIn 1.5s ease forwards;
+    }
+
+    .tab {
+        margin: 15px 0;
+        padding: 14px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.08);
+        font-size: 1.1rem;
+        box-shadow: 0 0 15px rgba(255,95,200,0.2);
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 10px 28px;
+        border: none;
+        border-radius: 25px;
+        background: linear-gradient(45deg,#ff5fc8,#ff9edb);
+        color: #000;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(255,95,200,0.5);
+        transition: transform 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    h5, h6 {
+        margin-top: 10px;
+        font-weight: normal;
+        color: #ffd6ec;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- ❤️ Hearts -->
+<script>
+for(let i=0;i<25;i++){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(6+Math.random()*6)+"s";
+    heart.style.fontSize=(14+Math.random()*18)+"px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<!-- ✨ Sparkles -->
+<script>
+for(let i=0;i<40;i++){
+    const s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDelay=Math.random()*2+"s";
+    document.body.appendChild(s);
+}
+</script>
+
+<div class="container">
+    <!-- TYPEWRITER TITLE -->
+    <h1 id="title"></h1><span class="cursor" id="cursor">|</span>
+
+    <!-- PASSWORD CONTENT -->
+    <div class="password-box" id="passwordBox">
+        <div class="tab">TO SEE WHAT'S INSIDE</div>
+
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="checkPassword()">Enter</button>
+
+        <h5>Enter password as Vaishulove79...,</h5>
+        <h5>Note: Case Sensitive, Enter all characters</h5> 
+    </div>
+</div>
+
+<script>
+/* TYPEWRITER */
+const text = "Happyyy Happyyy Happiiesttt Birthday, dear Vaishnavi! 🥰";
+let i = 0;
+const speed = 70;
+const title = document.getElementById("title");
+const cursor = document.getElementById("cursor");
+const passwordBox = document.getElementById("passwordBox");
+
+function typeText() {
+    if (i < text.length) {
+        title.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeText, speed);
+    } else {
+        setTimeout(() => {
+            title.classList.add("fade-out");
+            cursor.style.display = "none";
+        }, 1200);
+
+        setTimeout(() => {
+            title.style.display = "none";
+            passwordBox.style.display = "block";
+        }, 2300);
+    }
+}
+typeText();
+
+/* PASSWORD CHECK */
+function checkPassword() {
+    const pass = document.getElementById("password").value;
+
+    if (pass === "Vaishulove79...,") {
+        window.location.href = "tabs.html";
+    } else {
+        alert("Wrong password 💔");
+    }
+}
+</script>
+
+</body>
+</html>

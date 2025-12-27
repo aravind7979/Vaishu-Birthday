@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Solitude</title>
+    <style>
+        :root {
+            /* Deep midnight palette */
+            --bg-color: #050505;
+            --sky-glow: radial-gradient(circle at 20% 25%, #1a2a3a 0%, #050505 60%);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-color);
+            background-image: var(--sky-glow);
+            font-family: 'Georgia', serif;
+        }
+
+        /* ✨ Subtle Starry Background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png') repeat;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        /* 🌙 The Glowing Moon */
+        .moon {
+            position: absolute;
+            top: 60px;
+            left: 10%;
+            width: 110px;
+            height: 110px;
+            background: #fdfdfe;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px rgba(255, 255, 255, 0.2), 
+                0 0 80px rgba(255, 255, 255, 0.1);
+            animation: moonPulse 6s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes moonPulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.03); filter: brightness(1.2); }
+        }
+
+
+        /* 🕊 Realistic Flying Birds */
+        .bird-svg {
+            position: absolute;
+            fill: #000;
+            width: 45px;
+            z-index: 5;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+            animation: fly-across 20s linear infinite;
+        }
+        
+        .bird1 { top: 25%; left: -100px; }
+        .bird2 { top: 32%; left: -180px; animation-delay: 5s; }
+
+        @keyframes fly-across {
+            0% { transform: translateX(0) translateY(0) rotate(0deg); }
+            25% { transform: translateX(30vw) translateY(-15px) rotate(-2deg); }
+            75% { transform: translateX(80vw) translateY(15px) rotate(2deg); }
+            100% { transform: translateX(115vw) translateY(0) rotate(0deg); }
+        }
+
+        /* 🌫 Thick Atmospheric Mist */
+        .mist {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40vh;
+            background: linear-gradient(to top, rgba(20, 20, 25, 0.9), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* 💔 Mood Text */
+        .text-overlay {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 1.1rem;
+            font-style: italic;
+            letter-spacing: 3px;
+            text-transform: lowercase;
+            animation: slowFade 8s ease-in-out;
+        }
+
+        @keyframes slowFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+/* 🖤 Lonely Man Image Animation */
+.lonely-man {
+    position: absolute;
+    bottom: -200px;        /* start off-screen */
+    right: 10px;
+    width: 420px;          /* adjust if needed */
+    opacity: -50;
+    z-index: 12;
+    animation: riseIn 4s ease-out forwards;
+}
+
+@keyframes riseIn {
+    0% {
+        transform: translate(0, 0) scale(0.9);
+        opacity: 0;
+    }
+    60% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-120px, -140px) scale(1);
+        opacity: 1;
+    }
+}
+
+/* ❤️ Center Emotional Text */
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 8;
+    animation: textAppear 6s ease-in-out;
+}
+
+.center-text h1 {
+    margin: 0;
+    font-size: 3.2rem;
+    letter-spacing: 6px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+}
+
+.center-text h2 {
+    margin: 12px 0 0;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 300;
+}
+
+.center-text h3 {
+    margin-top: 22px;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+}
+
+@keyframes textAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+    <div class="moon"></div>
+<div class="center-text">
+    <h1>VAISHNAVI</h1>
+    <h2>One last chance</h2>
+    <h3>I will never let you go and will hold this forever </h3>
+    <h1>♾️🌍</h1>
+</div>
+
+
+    <svg class="bird-svg bird1" viewBox="0 0 512 512">
+        <path d="M512 235c-20 4-40 10-60 18-30-50-85-80-145-80-35 0-68 10-96 28 15-25 43-43 76-48-10-2-20-3-31-3-60 0-112 35-135 87-25-15-55-25-86-28 15 45 50 82 95 98-35 15-60 45-65 85 50-15 85-55 95-105 25 15 55 25 86 28-15-45-50-82-95-98 35-15 60-45 65-85-50 15-85 55-95 105z"/>
+    </svg>
+
+    <svg class="bird-svg bird2" viewBox="0 0 512 512">
+        <path d="M512 235c-20 4-40 10-60 18-30-50-85-80-145-80-35 0-68 10-96 28 15-25 43-43 76-48-10-2-20-3-31-3-60 0-112 35-135 87-25-15-55-25-86-28 15 45 50 82 95 98-35 15-60 45-65 85 50-15 85-55 95-105 25 15 55 25 86 28-15-45-50-82-95-98 35-15 60-45 65-85-50 15-85 55-95 105z"/>
+    </svg>
+
+    <div class="mist"></div>
+
+    <div class="text-overlay">
+        the void remains where you used to be...
+    </div>
+<img src="mee.png" alt="lonely man" class="lonely-man">
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Love Tabs Animation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: #000;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        color: #fff;
+    }
+
+    /* Top text + clock */
+    #header {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+#header h1 {
+    font-size: 2rem;          /* ⬆ increased */
+    letter-spacing: 3px;
+    font-weight: 300;
+    margin-bottom: 18px;
+}
+
+#hintText {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    color: white;
+    font-size: 18px;
+    z-index: 1000;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+#hintText1 {
+    position: fixed;
+    top: 105px;
+    right: 60px;
+    color: white;
+    font-size: 11px;
+    z-index: 1000;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+
+
+    #clock-box {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+  .clock-num {
+    font-size: 2.6rem;        /* ⬆ increased */
+    color: #ff4d6d;
+    font-weight: bold;
+}
+
+.clock-label {
+    font-size: 1.1rem;        /* ⬆ increased */
+    color: #aaa;
+    margin-left: 6px;
+}
+
+
+    /* Image */
+    #image {
+        width: 420px;
+        max-width: 40vw;
+        opacity: 0;
+        position: absolute;
+        left: 50%;
+        top: 55%;
+        transform: translate(-50%, -50%) scale(0.85);
+        transition: all 1.5s ease;
+    }
+
+    #image.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    #image.move-left {
+        left: 40px;
+        transform: translateY(-50%) scale(1);
+    }
+
+    /* Tabs container */
+#tabs {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 460px;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    overflow-y: auto;      /* scrolling enabled */
+    padding-right: 10px;
+
+    /* 🔥 Hide scrollbar (ALL browsers) */
+    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;      /* IE & Edge */
+}
+
+/* Chrome, Safari, Opera */
+#tabs::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* scrollbar styling (optional, looks premium) */
+#tabs::-webkit-scrollbar {
+    width: 6px;
+}
+#tabs::-webkit-scrollbar-thumb {
+    background: #ff4d6d;
+    border-radius: 10px;
+}
+
+
+    .tab {
+    width: 420px;                /* 🔥 increased horizontal length */
+    padding: 18px 22px;
+    background: #111;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateX(80px); /* smoother slide for long tab */
+    transition: all 0.8s ease;
+}
+
+
+    .tab.show {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .heart {
+        cursor: pointer;
+        font-size: 22px;
+    }
+
+    .text {
+        font-size: 14px;
+        color: #eee;
+        display: none;
+    }
+
+/* ===== LOVE ENHANCEMENTS (SAFE ADDITION) ===== */
+
+/* Soft vignette for emotional depth */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.85));
+    pointer-events: none;
+}
+
+/* Gentle glow on heading */
+#header h1 {
+    color: #ff8fa3;
+    text-shadow: 0 0 18px rgba(255,143,163,0.35);
+}
+
+/* Clock glow */
+.clock-num {
+    text-shadow: 0 0 15px rgba(255,77,109,0.4);
+}
+
+/* Make tabs feel like memories */
+.tab {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Softer readable love text */
+.text {
+    line-height: 1.7;
+    animation: fadeText 1s ease forwards;
+}
+
+/* Heart emotion */
+.heart {
+    animation: heartbeat 1.6s infinite;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+@keyframes fadeText {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ===== FINAL TAB (BOTTOM CENTER) ===== */
+#finalTab {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s ease;
+    z-index: 999;
+}
+
+#finalTab.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.final-heart {
+    font-size: 42px;
+    cursor: pointer;
+    animation: heartbeat 1.6s infinite;
+}
+
+#finalTab h6 {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #ccc;
+    letter-spacing: 1px;
+}
+
+
+</style>
+</head>
+
+<body>
+<h3 id="hintText">Click on the ❤️</h3>
+<h2 id="hintText1">& Scroll down to read 42 </h2>
+
+
+
+<audio id="bg-music" loop>
+    <source src="fool.mpeg" type="audio/mpeg">
+    Your browser does not support audio.
+</audio>
+
+<script>
+const music = document.getElementById("bg-music");
+
+// Play on first click
+document.addEventListener("click", () => {
+    music.play();
+}, { once: true });
+</script>
+
+
+
+<!-- HEADER -->
+<div id="header">
+    <h1>I'VE BEEN WAITING FOR THIS DAY SINCE</h1>
+    <div id="clock-box">
+        <div><span class="clock-num" id="days">0</span><span class="clock-label">days</span></div>
+        <div><span class="clock-num" id="hours">0</span><span class="clock-label">hours</span></div>
+        <div><span class="clock-num" id="minutes">0</span><span class="clock-label">min</span></div>
+    </div>
+</div>
+
+<!-- TREE IMAGE -->
+<img src="tree.png" id="image">
+
+<!-- LOVE TABS -->
+<div id="tabs"></div>
+
+<script>
+/* -------- CLOCK LOGIC (FROM 2nd CODE) -------- */
+const birthday = new Date("May 28, 2022 13:30:00").getTime();
+
+
+function updateClock() {
+    const now = new Date().getTime();
+    const diff = now - birthday;
+
+    document.getElementById("days").innerText =
+        Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    document.getElementById("hours").innerText =
+        Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    document.getElementById("minutes").innerText =
+        Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* -------- IMAGE + TAB LOGIC -------- */
+const image = document.getElementById("image");
+const tabsContainer = document.getElementById("tabs");
+
+const messages = [
+    "Hello Vaishnavi How are you? I hope you’re good. 💖",
+    "Happyyy Birthday, dear Vaishnavi! 🥰",
+    "I’ve been eagerly waiting for this day. I think it’s now been 3 years and 214 days that I’ve been waiting",
+    "Only I know what I’ve been through all these years",
+    "I’ve missed you in moments when I need you but had no words to reach you",
+    "Because I didn’t want to disturb your life while mine learned to carry the pain",
+    "I have to tell you what really happened over these years. But I can't!",
+    "I walked through these years carrying you silently, and only now do I realize that some of the most precious connections fade not because of lack of love, but because life never gave them the time they deserved",
+    "Everything I did was only for you",
+    "If missing someone could be seen, you would know how long I’ve been holding this inside",
+    "There were days I wanted to talk to you, but life kept placing mountains in front of me",
+    "I don’t cry often… but when I do, it’s usually the reason - I need you!",
+    "Even when life separated our paths, the respect I had for you never changed",
+    "I never told you this, but your forgiveness once taught me what real goodness looks like",
+    "Your presence in my life was small, but the impact you left was unforgettable",
+    "You made me believe that a pure connection can still exist, without needing to be named",
+    "I learned to cross challenges, and somehow… the thought 'you will be mine if I do this' made it easier to keep going",
+    "Not all journeys go the way we imagine, but you were the reason I kept taking every step with hope",
+    "I faced more setbacks than I ever expected, but the respect and love I had for you never changed",
+    "The hardest part is knowing that the person who made me better was never mine to hold",
+    "There’s a pain in me that comes from loving someone I can only admire from far away",
+    "Some distances aren’t measured in kilometers… they’re measured in the space between two hearts that never met at the same time, like us",
+    "It hurts in a quiet way — loving someone who is close to my memories but far from my life",
+    "You were always a beautiful chapter in my story… even if I was only a footnote in yours",
+    "The saddest feeling is knowing how deeply I love, yet how little place I have in your world",
+    "Sometimes I pretend I’m okay, but a part of me still wishes our paths had stayed closer",
+    "You became the girl I thought was mine, but never truly was",
+    "There’s a pain in realizing that the person who once felt so close is now a distant moon, also I haven’t even seen that moon these years",
+    "If life had placed me a little closer to you, maybe I wouldn’t be carrying this pain of almost having you",
+    "I never expected you to be mine… yet a part of me kept loving you anyway",
+    "There’s a gentle sorrow in caring for someone without ever asking them to stay",
+    "Some loves aren’t confessed… they are carried. And you are the one I’ve carried all these years",
+    "My heart learned affection by remembering you… even when life moved us apart",
+    "If destiny ever gave me one moment with you, I’d spend it telling you everything",
+    "Meeting you was the destiny, talking to you was an opportunity but loving you?", 
+    "Even with sadness in it, loving you has always felt like the honest part of my life",
+    "I never expected anything in return, yet a part of me still longs for you to be in my life again",
+    "I'll wait for you, Until the day you ask me - Are you still waiting for me?",
+    "Only fools fall in Love??",
+    "You can say that I'm a fool and I don't know very much. But I think they call this Love ❤️",
+    "Even if our paths never join, a part of me will always carry love for you — quietly, respectfully, and forever",
+    "With everything I've understood now, all I seek is your one last forgiveness - not to rewrite the past, but to finally let this heart rest in peace",
+  
+    // 👉 add up to 50 lines here
+];
+
+
+
+let currentTab = 0;
+
+// Show image
+setTimeout(() => {
+    image.classList.add("show");
+}, 500);
+
+// Move image left + start tabs
+setTimeout(() => {
+    image.classList.add("move-left");
+    createTab();
+}, 2500);
+
+function createTab() {
+    if (currentTab >= messages.length) {
+        document.getElementById("finalTab").classList.add("show");
+        return;
+    }
+
+
+    const tab = document.createElement("div");
+    tab.className = "tab";
+
+    const text = document.createElement("div");
+    text.className = "text";
+    text.innerText = messages[currentTab];
+
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+
+    heart.onclick = () => {
+        text.style.display = "block";
+        heart.style.display = "none";
+        currentTab++;
+        setTimeout(createTab, 500);
+    };
+
+    tab.appendChild(text);
+    tab.appendChild(heart);
+    tabsContainer.appendChild(tab);
+
+    setTimeout(() => tab.classList.add("show"), 100);
+}
+</script>
+<canvas id="loveCanvas"></canvas>
+
+<script>
+const canvas = document.getElementById("loveCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const hearts = [];
+
+function Heart() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + Math.random() * 200;
+    this.size = Math.random() * 8 + 6;
+    this.speed = Math.random() * 0.4 + 0.2;
+    this.opacity = Math.random() * 0.5 + 0.3;
+}
+
+Heart.prototype.draw = function () {
+    ctx.globalAlpha = this.opacity;
+    ctx.font = this.size + "px serif";
+    ctx.fillText("❤️", this.x, this.y);
+};
+
+Heart.prototype.update = function () {
+    this.y -= this.speed;
+    if (this.y < -20) this.y = canvas.height + 50;
+};
+
+for (let i = 0; i < 35; i++) hearts.push(new Heart());
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hearts.forEach(h => { h.update(); h.draw(); });
+    requestAnimationFrame(animate);
+}
+animate();
+
+window.onresize = () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+};
+
+</script>
+
+<!-- FINAL HEART TAB -->
+<div id="finalTab">
+    <div class="final-heart">❤️</div>
+    <h6>Click on the above ❤️</h6>
+</div>
+
+<script>
+document.querySelector(".final-heart").onclick = () => {
+    window.location.href = "separation.html";
+};
+</script>
+
+
+</body>
+</html>
